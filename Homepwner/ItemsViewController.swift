@@ -14,7 +14,7 @@ class ItemsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
     }
     
     @IBAction func addNewItem(_ sender: UIButton) {
@@ -50,7 +50,6 @@ class ItemsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-      
         let item = itemStore.allItems[indexPath.row]
         cell.textLabel?.text = item.name
         cell.detailTextLabel?.text = "$\(item.valueInDollars)"
@@ -60,14 +59,32 @@ class ItemsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
             let item = itemStore.allItems[indexPath.row]
-            itemStore.remove(item)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let title = "Delete \(item.name)?"
+            let message = "Are you sure you want to delete this item?"
+            let ac = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            ac.addAction(cancelAction)
+            
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive,
+                                             handler: { (action) -> Void in
+                                                self.itemStore.remove(item)
+                                                tableView.deleteRows(at: [indexPath], with: .fade)
+            })
+            ac.addAction(deleteAction)
+            present(ac, animated: true, completion: nil)
         } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            
         }    
     }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let action0 = UITableViewRowAction(style: .normal, title: "Remove") { (action: UITableViewRowAction, indexPath: IndexPath) in
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        return [action0]
+    }
+    
  
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         itemStore.moveItem(from: fromIndexPath.row, to: to.row)
