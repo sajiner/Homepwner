@@ -16,6 +16,25 @@ class ItemsViewController: UITableViewController {
         super.viewDidLoad()
         
     }
+    
+    @IBAction func addNewItem(_ sender: UIButton) {
+        let newItem = itemStore.creatItem()
+        if let index = itemStore.allItems.index(of: newItem) {
+            let indexPath = IndexPath(item: index, section: 0)
+            tableView.insertRows(at: [indexPath], with: .automatic)
+        }
+        
+    }
+    
+    @IBAction func toggleEditingMode(_ sender: UIButton) {
+        if isEditing {
+            sender.setTitle("Edit", for: .normal)
+            setEditing(false, animated: true)
+        } else {
+            sender.setTitle("Done", for: .normal)
+            setEditing(true, animated: true)
+        }
+    }
 
     // MARK: - Table view data source
 

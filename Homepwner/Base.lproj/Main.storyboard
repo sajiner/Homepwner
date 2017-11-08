@@ -16,9 +16,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="sQz-L0-6fI">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cN9-nN-EXS">
+                                    <rect key="frame" x="8" y="12" width="175.5" height="30"/>
+                                    <state key="normal" title="Edit"/>
+                                    <connections>
+                                        <action selector="toggleEditingMode:" destination="ZVe-a6-gJH" eventType="touchUpInside" id="TFp-yF-yUN"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQd-If-Mn5">
+                                    <rect key="frame" x="191.5" y="12" width="175.5" height="30"/>
+                                    <state key="normal" title="Add"/>
+                                    <connections>
+                                        <action selector="addNewItem:" destination="ZVe-a6-gJH" eventType="touchUpInside" id="qSp-ie-bL1"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="cN9-nN-EXS" firstAttribute="centerY" secondItem="sQz-L0-6fI" secondAttribute="centerY" id="3tb-Nk-ie8"/>
+                                <constraint firstAttribute="trailing" secondItem="fQd-If-Mn5" secondAttribute="trailing" constant="8" id="Xcj-X9-qL0"/>
+                                <constraint firstItem="cN9-nN-EXS" firstAttribute="leading" secondItem="sQz-L0-6fI" secondAttribute="leading" constant="8" id="cHh-Rs-FNR"/>
+                                <constraint firstItem="fQd-If-Mn5" firstAttribute="leading" secondItem="cN9-nN-EXS" secondAttribute="trailing" constant="8" id="d6W-bp-IVq"/>
+                                <constraint firstItem="fQd-If-Mn5" firstAttribute="width" secondItem="cN9-nN-EXS" secondAttribute="width" id="l7c-96-Aa6"/>
+                                <constraint firstItem="cN9-nN-EXS" firstAttribute="baseline" secondItem="fQd-If-Mn5" secondAttribute="baseline" id="zl5-rW-1hZ"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="fWS-88-F5V" detailTextLabel="CFV-BF-JDX" style="IBUITableViewCellStyleValue1" id="3Ao-gS-Cap">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="82" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3Ao-gS-Cap" id="ZMr-fo-PxN">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -50,7 +79,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JZl-vi-koG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="223" y="236"/>
+            <point key="canvasLocation" x="221.59999999999999" y="235.23238380809596"/>
         </scene>
     </scenes>
 </document>

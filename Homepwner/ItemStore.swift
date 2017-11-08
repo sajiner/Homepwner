@@ -12,9 +12,9 @@ class ItemStore {
     var allItems = [Item]()
     
     init() {
-        for _ in 0..<5 {
-            creatItem()
-        }
+//        for _ in 0..<5 {
+//            creatItem()
+//        }
     }
     
    @discardableResult func creatItem() -> Item {
@@ -22,5 +22,7 @@ class ItemStore {
         allItems.append(newItem)
         return newItem
     }
+    
+    
     
 }
