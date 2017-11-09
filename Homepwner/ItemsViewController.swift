@@ -52,14 +52,25 @@ class ItemsViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let item = itemStore.allItems[indexPath.row]
         cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = "$\(item.valueInDollars)"
-        
+        if indexPath.row == itemStore.allItems.count - 1 {
+           cell.detailTextLabel?.text = nil
+        } else {
+            cell.detailTextLabel?.text = "$\(item.valueInDollars)"
+        }
         return cell
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let item = itemStore.allItems[indexPath.row]
+           
+        } else if editingStyle == .insert {
+            
+        }    
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let action0 = UITableViewRowAction(style: .destructive, title: "Remove") { (action: UITableViewRowAction, indexPath: IndexPath) in
+            let item = self.itemStore.allItems[indexPath.row]
             let title = "Delete \(item.name)?"
             let message = "Are you sure you want to delete this item?"
             let ac = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
@@ -72,22 +83,35 @@ class ItemsViewController: UITableViewController {
                                                 tableView.deleteRows(at: [indexPath], with: .fade)
             })
             ac.addAction(deleteAction)
-            present(ac, animated: true, completion: nil)
-        } else if editingStyle == .insert {
-            
-        }    
-    }
-    
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let action0 = UITableViewRowAction(style: .normal, title: "Remove") { (action: UITableViewRowAction, indexPath: IndexPath) in
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.present(ac, animated: true, completion: nil)
         }
         return [action0]
     }
     
- 
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row == itemStore.allItems.count - 1 {
+            return false
+        }
+        return true
+    }
+    
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         itemStore.moveItem(from: fromIndexPath.row, to: to.row)
         
+    }
+    
+    /// 禁止某一行移动，但是不能禁止其他行移动到其下边
+   override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row == itemStore.allItems.count - 1 {
+            return false
+        }
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if proposedDestinationIndexPath.row < itemStore.allItems.count - 1 {
+            return proposedDestinationIndexPath
+        }
+        return sourceIndexPath
     }
 }

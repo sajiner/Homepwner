@@ -12,14 +12,17 @@ class ItemStore {
     var allItems = [Item]()
     
     init() {
-//        for _ in 0..<5 {
-//            creatItem()
-//        }
+        let noMoreItem = Item(name: "No more Items!", valueInDollars: 0, serialNumber: nil)
+        allItems.append(noMoreItem)
     }
     
    @discardableResult func creatItem() -> Item {
         let newItem = Item(random: true)
+    if allItems.count > 0 {
+        allItems.insert(newItem, at: allItems.count - 1)
+    } else {
         allItems.append(newItem)
+    }
         return newItem
     }
     
