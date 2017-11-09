@@ -56,7 +56,11 @@ class ItemsViewController: UITableViewController {
         if indexPath.row != itemStore.allItems.count - 1 {
             cell.serialLabel.text = item.serialNumber
             cell.valueLabel.text = "$\(item.valueInDollars)"
+        } else {
+            cell.serialLabel.text = nil
+            cell.valueLabel.text = nil
         }
+        cell.updateLabels()
         return cell
     }
 

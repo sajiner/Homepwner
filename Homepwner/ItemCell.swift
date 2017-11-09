@@ -14,15 +14,12 @@ class ItemCell: UITableViewCell {
     @IBOutlet  var serialLabel: UILabel!
     @IBOutlet  var valueLabel: UILabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    func updateLabels() {
+        let bodyFont = UIFont.preferredFont(forTextStyle: .body)
+        nameLabel.font = bodyFont
+        serialLabel.font = bodyFont
+        
+        let caption1Font = UIFont.preferredFont(forTextStyle: .caption1)
+        valueLabel.font = caption1Font
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }
