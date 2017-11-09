@@ -14,7 +14,8 @@ class ItemsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 65
     }
     
     @IBAction func addNewItem(_ sender: UIButton) {
@@ -49,13 +50,12 @@ class ItemsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ItemCell
         let item = itemStore.allItems[indexPath.row]
-        cell.textLabel?.text = item.name
-        if indexPath.row == itemStore.allItems.count - 1 {
-           cell.detailTextLabel?.text = nil
-        } else {
-            cell.detailTextLabel?.text = "$\(item.valueInDollars)"
+        cell.nameLabel.text = item.name
+        if indexPath.row != itemStore.allItems.count - 1 {
+            cell.serialLabel.text = item.serialNumber
+            cell.valueLabel.text = "$\(item.valueInDollars)"
         }
         return cell
     }

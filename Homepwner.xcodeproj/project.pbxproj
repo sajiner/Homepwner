@@ -16,6 +16,7 @@
 		AE113DFC1FB2F2BA0073A179 /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE113DFB1FB2F2BA0073A179 /* ItemsViewController.swift */; };
 		AE113DFE1FB2F3320073A179 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE113DFD1FB2F3320073A179 /* Item.swift */; };
 		AEA5452D1FB2F76C00E1A333 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA5452C1FB2F76C00E1A333 /* ItemStore.swift */; };
+		AEB4D8111FB4308B00E4E194 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB4D8101FB4308B00E4E194 /* ItemCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		AE113DFB1FB2F2BA0073A179 /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
 		AE113DFD1FB2F3320073A179 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		AEA5452C1FB2F76C00E1A333 /* ItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
+		AEB4D8101FB4308B00E4E194 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				AE113DFB1FB2F2BA0073A179 /* ItemsViewController.swift */,
 				AE113DFD1FB2F3320073A179 /* Item.swift */,
 				AEA5452C1FB2F76C00E1A333 /* ItemStore.swift */,
+				AEB4D8101FB4308B00E4E194 /* ItemCell.swift */,
 				AE103F131FAB6C9400840A9C /* Main.storyboard */,
 				AE103F161FAB6C9400840A9C /* Assets.xcassets */,
 				AE103F181FAB6C9400840A9C /* LaunchScreen.storyboard */,
@@ -269,6 +272,7 @@
 				AE113DFE1FB2F3320073A179 /* Item.swift in Sources */,
 				AEA5452D1FB2F76C00E1A333 /* ItemStore.swift in Sources */,
 				AE113DFC1FB2F2BA0073A179 /* ItemsViewController.swift in Sources */,
+				AEB4D8111FB4308B00E4E194 /* ItemCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

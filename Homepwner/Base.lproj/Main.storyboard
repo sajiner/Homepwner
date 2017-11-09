@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZVe-a6-gJH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZVe-a6-gJH">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -46,29 +47,50 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="fWS-88-F5V" detailTextLabel="CFV-BF-JDX" style="IBUITableViewCellStyleValue1" id="3Ao-gS-Cap">
-                                <rect key="frame" x="0.0" y="82" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="110" id="3Ao-gS-Cap" customClass="ItemCell" customModule="Homepwner" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="82" width="375" height="110"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3Ao-gS-Cap" id="ZMr-fo-PxN">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="109.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fWS-88-F5V">
-                                            <rect key="frame" x="16" y="12" width="33.5" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6if-m5-bg5">
+                                            <rect key="frame" x="26" y="21" width="0.0" height="0.0"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CFV-BF-JDX">
-                                            <rect key="frame" x="300" y="12" width="59" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W7c-tS-z4X">
+                                            <rect key="frame" x="26" y="31" width="0.0" height="68.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bIt-WJ-NMb">
+                                            <rect key="frame" x="365" y="55" width="0.0" height="0.0"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="W7c-tS-z4X" firstAttribute="leading" secondItem="6if-m5-bg5" secondAttribute="leading" id="9i7-cA-Iij"/>
+                                        <constraint firstItem="6if-m5-bg5" firstAttribute="top" secondItem="ZMr-fo-PxN" secondAttribute="topMargin" constant="10" id="IWi-hQ-EuB"/>
+                                        <constraint firstItem="bIt-WJ-NMb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZMr-fo-PxN" secondAttribute="leading" constant="20" symbolic="YES" id="MMA-9V-Ax5"/>
+                                        <constraint firstItem="W7c-tS-z4X" firstAttribute="top" secondItem="6if-m5-bg5" secondAttribute="bottom" constant="10" id="VD7-az-UqB"/>
+                                        <constraint firstAttribute="trailing" secondItem="bIt-WJ-NMb" secondAttribute="trailing" constant="10" id="WSI-lX-ARs"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6if-m5-bg5" secondAttribute="trailingMargin" id="a5H-8d-t9m"/>
+                                        <constraint firstItem="bIt-WJ-NMb" firstAttribute="centerY" secondItem="ZMr-fo-PxN" secondAttribute="centerY" id="apm-eX-Jvs"/>
+                                        <constraint firstItem="6if-m5-bg5" firstAttribute="leading" secondItem="ZMr-fo-PxN" secondAttribute="leadingMargin" constant="10" id="ecv-Qf-QGk"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="W7c-tS-z4X" secondAttribute="trailing" constant="20" symbolic="YES" id="lop-96-Ve4"/>
+                                        <constraint firstAttribute="bottom" secondItem="W7c-tS-z4X" secondAttribute="bottom" constant="10" id="rDa-Rh-Blb"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="6if-m5-bg5" id="fzY-cb-QaQ"/>
+                                    <outlet property="serialLabel" destination="W7c-tS-z4X" id="tpa-8D-9FD"/>
+                                    <outlet property="valueLabel" destination="bIt-WJ-NMb" id="LE1-ud-sj1"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
