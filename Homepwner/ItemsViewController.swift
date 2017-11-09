@@ -12,28 +12,38 @@ class ItemsViewController: UITableViewController {
 
     var itemStore : ItemStore!
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        navigationItem.leftBarButtonItem = editButtonItem
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 65
     }
     
-    @IBAction func addNewItem(_ sender: UIButton) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
+    @IBAction func addNewItem(_ sender: UIBarButtonItem) {
         let newItem = itemStore.creatItem()
         if let index = itemStore.allItems.index(of: newItem) {
             let indexPath = IndexPath(item: index, section: 0)
             tableView.insertRows(at: [indexPath], with: .automatic)
         }
-        
     }
     
-    @IBAction func toggleEditingMode(_ sender: UIButton) {
-        if isEditing {
-            sender.setTitle("Edit", for: .normal)
-            setEditing(false, animated: true)
-        } else {
-            sender.setTitle("Done", for: .normal)
-            setEditing(true, animated: true)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowItem" {
+            if let row = tableView.indexPathForSelectedRow?.row {
+                let item = itemStore.allItems[row]
+                let detailVc = segue.destination as! DetailViewController
+                detailVc.item = item
+            }
         }
     }
 
