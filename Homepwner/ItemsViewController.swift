@@ -127,5 +127,5 @@ class ItemsViewController: UITableViewController {
             return proposedDestinationIndexPath
         }
         return sourceIndexPath
-    }
+    }   
 }

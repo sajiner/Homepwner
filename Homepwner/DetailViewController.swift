@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Photos
 
 class DetailViewController: UIViewController {
     @IBOutlet var nameField: UITextField!
     @IBOutlet var serialField: UITextField!
     @IBOutlet var valueField: UITextField!
     @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var imageView: UIImageView!
     
     var item: Item! {
         didSet {
@@ -35,10 +37,44 @@ class DetailViewController: UIViewController {
         return dateFormatter
     }()
     
+    @IBAction func takePicture(_ sender: UIBarButtonItem) {
+        let pickerVc = UIImagePickerController()
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            pickerVc.sourceType = .camera
+        } else {
+            pickerVc.sourceType = .photoLibrary
+        }
+        pickerVc.delegate = self 
+        present(pickerVc, animated: true, completion: nil)
+    }
+    
+    func checkPermission() {
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+        switch photoAuthorizationStatus {
+        case .authorized:
+            print("Access is granted by user")
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization({
+                (newStatus) in
+                print("status is \(newStatus)")
+                if newStatus ==  PHAuthorizationStatus.authorized {
+                    /* do stuff here */
+                    print("success")
+                }
+            })
+            print("It is not determined until now")
+        case .restricted:
+            // same same
+            print("User do not have access to photo album.")
+        case .denied:
+            // same same
+            print("User has denied the permission.")
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
+//        checkPermission()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -60,4 +96,21 @@ class DetailViewController: UIViewController {
         }
         
     }
+}
+
+extension DetailViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        print("\(info)")
+        self.imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        dismiss(animated: true) {
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
 }
