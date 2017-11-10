@@ -22,6 +22,8 @@ class DetailViewController: UIViewController {
         }
     }
     
+    var imageStore: ImageStore!
+    
     let numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
@@ -39,42 +41,45 @@ class DetailViewController: UIViewController {
     
     @IBAction func takePicture(_ sender: UIBarButtonItem) {
         let pickerVc = UIImagePickerController()
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            pickerVc.sourceType = .camera
-        } else {
-            pickerVc.sourceType = .photoLibrary
-        }
-        pickerVc.delegate = self 
-        present(pickerVc, animated: true, completion: nil)
-    }
-    
-    func checkPermission() {
-        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
-        switch photoAuthorizationStatus {
-        case .authorized:
-            print("Access is granted by user")
-        case .notDetermined:
-            PHPhotoLibrary.requestAuthorization({
-                (newStatus) in
-                print("status is \(newStatus)")
-                if newStatus ==  PHAuthorizationStatus.authorized {
-                    /* do stuff here */
-                    print("success")
+        
+        let alertVc = UIAlertController(title: "选择照片", message: nil, preferredStyle: .actionSheet)
+        alertVc.addAction(UIAlertAction(title: "拍照", style: .default, handler: { (_) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                pickerVc.sourceType = .camera
+                pickerVc.delegate = self
+                self.present(pickerVc, animated: true, completion: nil)
+            } else {
+                let url = URL.init(string: UIApplicationOpenSettingsURLString)
+                if UIApplication.shared.canOpenURL(url!) {
+                    UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                }
+            }
+        }))
+        
+        alertVc.addAction(UIAlertAction(title: "相册", style: .default, handler: { (action: UIAlertAction) in
+            PHPhotoLibrary.requestAuthorization({ (status: PHAuthorizationStatus) in
+                switch status {
+                case .denied, .restricted:
+                    let url = URL.init(string: UIApplicationOpenSettingsURLString)
+                    if UIApplication.shared.canOpenURL(url!) {
+                        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                    }
+                    break
+                default:
+                    pickerVc.sourceType = .photoLibrary
+                    pickerVc.delegate = self
+                    self.present(pickerVc, animated: true, completion: nil)
                 }
             })
-            print("It is not determined until now")
-        case .restricted:
-            // same same
-            print("User do not have access to photo album.")
-        case .denied:
-            // same same
-            print("User has denied the permission.")
-        }
+        }))
+       
+       alertVc.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        present(alertVc, animated: true, completion: nil)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        checkPermission()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +88,7 @@ class DetailViewController: UIViewController {
         serialField.text = item.serialNumber
         valueField.text = numberFormatter.string(for: item.valueInDollars)
         dateLabel.text = dateFormatter.string(from: item.dateCreated)
+        imageView.image = imageStore.image(forKey: item.itemKey)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -101,8 +107,11 @@ class DetailViewController: UIViewController {
 extension DetailViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        print("\(info)")
-        self.imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+//        print("\(info)")
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.imageView.image = image
+                imageStore.setImage(image, forKey: item.itemKey)
+        }
         dismiss(animated: true) {
         }
     }
