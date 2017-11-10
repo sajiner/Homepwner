@@ -44,16 +44,23 @@ class DetailViewController: UIViewController {
         
         let alertVc = UIAlertController(title: "选择照片", message: nil, preferredStyle: .actionSheet)
         alertVc.addAction(UIAlertAction(title: "拍照", style: .default, handler: { (_) in
-            if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                pickerVc.sourceType = .camera
-                pickerVc.delegate = self
-                self.present(pickerVc, animated: true, completion: nil)
-            } else {
-                let url = URL.init(string: UIApplicationOpenSettingsURLString)
-                if UIApplication.shared.canOpenURL(url!) {
-                    UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+            PHPhotoLibrary.requestAuthorization({ (status: PHAuthorizationStatus) in
+                switch status {
+                case .denied, .restricted:
+                    let url = URL.init(string: UIApplicationOpenSettingsURLString)
+                    DispatchQueue.main.async {
+                        /// 此方法只能在主线程
+                        if UIApplication.shared.canOpenURL(url!) {
+                            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                        }
+                    }
+                    break
+                default:
+                    pickerVc.sourceType = .camera
+                    pickerVc.delegate = self
+                    self.present(pickerVc, animated: true, completion: nil)
                 }
-            }
+            })
         }))
         
         alertVc.addAction(UIAlertAction(title: "相册", style: .default, handler: { (action: UIAlertAction) in
@@ -61,13 +68,17 @@ class DetailViewController: UIViewController {
                 switch status {
                 case .denied, .restricted:
                     let url = URL.init(string: UIApplicationOpenSettingsURLString)
-                    if UIApplication.shared.canOpenURL(url!) {
-                        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                    DispatchQueue.main.async {
+                        /// 此方法只能在主线程
+                        if UIApplication.shared.canOpenURL(url!) {
+                            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                        }
                     }
                     break
                 default:
                     pickerVc.sourceType = .photoLibrary
                     pickerVc.delegate = self
+                    pickerVc.allowsEditing = true
                     self.present(pickerVc, animated: true, completion: nil)
                 }
             })
@@ -108,9 +119,12 @@ extension DetailViewController: UINavigationControllerDelegate, UIImagePickerCon
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
 //        print("\(info)")
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.imageView.image = image
-                imageStore.setImage(image, forKey: item.itemKey)
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            imageView.image = image
+            imageStore.setImage(image, forKey: item.itemKey)
+        } else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            imageView.image = image
+            imageStore.setImage(image, forKey: item.itemKey)
         }
         dismiss(animated: true) {
         }
